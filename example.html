@@ -42,7 +42,7 @@
         self.posts = []
 
         getPosts() {
-          return fetch('//quotesondesign.com/wp-json/posts')
+          return fetch('//wp-json/posts')
             .then(data => {
               data.json()
                 .then(result => {
