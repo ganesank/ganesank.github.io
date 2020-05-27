@@ -42,7 +42,7 @@
         self.posts = []
 
         getPosts() {
-          return fetch('//wp-json/posts')
+          return fetch('https://ganesan-cv-reactjs.netlify.app/.netlify/functions/cv-list')
             .then(data => {
               data.json()
                 .then(result => {
