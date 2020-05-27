@@ -1,69 +1,107 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <title>riot wordpress example</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Mock site for py-component-controller">
-    <meta name="keywords" content="HTML,CSS,JavaScript,Riot,WordPress">
-    <meta name="author" content="John Nolette">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.8.1/riot+compiler.js"></script>
-  </head>
-  <body>
-    <wp-posts></wp-posts>
-
-    <script type="riot/tag">
-
-      <wp-posts>
-        <div class="error" if={ error }>
-          <h1>Could not retrieve posts</h1>
-          </h2>{ error }</h2>
-        </div>
-        <div class="alert" if={ !posts }>
-          <h1>No posts found</h1>
-        </div>
-        <div class="row">
-          <div class="col-md-4" each={ post in posts }>
-            <div class="wp-post">
-              <h1>Title: { post.title }</h1>
-              <div class="wp-post-content">
-                { post.content }
-              </div>
-              <span>Link: <a href={ post.link }>{ post.title }</a></span>
-            </div>
-          </div>
-        </div>
-        <div class="info" if={ updated }>
-          <h1>Last Updated: { updated }</h1>
-        </div>
-
-        var self = this
-
-        self.posts = []
-
-        getPosts() {
-          return fetch('https://ganesan-cv-reactjs.netlify.app/.netlify/functions/cv-list')
-            .then(data => {
-              data.json()
-                .then(result => {
-                  delete self.error
-                  self.posts = result
-                  self.update()
-                })
-                .catch(error => {
-                  self.error = error
-                  self.update()
-                })
-            })
-        }
-
-        self.on('mount', self.getPosts)
-      </wp-posts>
-
-    </script>
-    
-    <script type="text/javascript">
-      riot.mount('wp-posts') // # mount riot
-    </script>
-  </body>
+   <head>
+      <title>Ganesan Karuppaiya CV List</title>
+      <meta charset="UTF-8">
+      <meta name="description" content="Mock site for py-component-controller">
+      <meta name="keywords" content="HTML,CSS,JavaScript,Riot,Netlify, FaunaDB">
+      <meta name="author" content="Ganesan Karuppaiya">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.8.1/riot+compiler.js"></script>
+      <style>
+         .card {
+         border: 0;
+         box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+         height: 100%;
+         }
+         .navbar-center{padding:10px;}
+         .navbar-center img{height:40px}
+         .card-image img{max-height: 120px}
+         .card {margin:5px;}
+         .column {padding-bottom:20px}
+      </style>
+   </head>
+   <body>
+      <wp-posts></wp-posts>
+      <script type="riot/tag">
+         <wp-posts>
+         <header class="navbar">
+			 <section class="navbar-section">
+				<a href="https://ganesan.xyz" class="btn btn-link text-dark">website</a>
+			 </section>
+			 <section class="navbar-center">
+				<img src="media/cv.png" />
+			 </section>
+			 <section class="navbar-section">			 
+				<a href="#" class="btn btn-link text-dark">GitHub</a>
+			 </section>
+         </header>
+		 <div class="hero bg-gray">
+			 <div class="hero-body text-center">
+			   <h1>Curriculum vitae </h1>
+				<h3>Ganesan Karuppaiya </h3>
+			   <p>applications listed below with the same content but developed on different frameworks and libraries</p>
+			 </div>
+                  
+			 <div class="container grid-lg">
+				 <div class="columns">
+					 <div class="column  col-4 col-md-6 col-sm-12  col-xs-12 " each={ post in posts }>
+						 <div class="card">
+						 <div class="card-image" style=background-color: {{ post.data.bgr }}> <img class="img-responsive" src={ post.data.img } alt={ post.data.title  } style="max-width:60%; margin:0 auto"></div>
+						 <div class="card-header">
+						   <div class="card-title h5">{ post.data.name }</div>
+						   <div class="card-subtitle text-gray"> <a href={ post.link }>{ post.title }</a></div>
+						 </div>
+						 <div class="card-footer"><a class="btn " href="#cards"> READ MORE</a> <a class="btn btn-primary" target="_bkank" href={ post.data.link}> GO TO PAGE</a></div>
+					  </div>
+					 
+						 </div>
+				 </div>
+			 </div>
+         
+           <div class="error" if={ error }>
+             <h1>Could not retrieve posts</h1>
+             </h2>{ error }</h2>
+           </div>
+           <div class="alert" if={ !posts }>
+             <h1>No posts found</h1>
+           </div>
+           <div class="row">
+            
+           </div>
+           <div class="info" if={ updated }>
+             <h1>Last Updated: { updated }</h1>
+           </div>
+         </div>
+           var self = this
+         
+           self.posts = []
+         
+           getPosts() {
+             return fetch('https://ganesan-cv-reactjs.netlify.app/.netlify/functions/cv-list')
+               .then(data => {
+                 data.json()
+                   .then(result => {
+                     delete self.error
+                     self.posts = result
+                     self.update()
+                   })
+                   .catch(error => {
+                     self.error = error
+                     self.update()
+                   })
+               })
+           }
+         
+           self.on('mount', self.getPosts)
+         </wp-posts>
+         
+      </script>
+      <script type="text/javascript">
+         riot.mount('wp-posts') // # mount riot
+      </script>
+   </body>
 </html>
